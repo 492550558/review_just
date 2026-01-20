@@ -1,0 +1,27 @@
+<!-- components/week-calendar/week-calendar.wxml -->
+<view class="week-calendar-container" 
+      bindtouchstart="onTouchStart" 
+      bindtouchmove="onTouchMove" 
+      bindtouchend="onTouchEnd">
+  
+  <!-- Canvas 曲线层 -->
+  <canvas type="2d" id="curveCanvas" class="curve-canvas"></canvas>
+
+  <!-- 日期层 -->
+  <view class="days-container">
+    <view class="day-item {{item.fullDate === selectedDate ? 'active' : ''}}" 
+          wx:for="{{weekDates}}" 
+          wx:key="fullDate"
+          bindtap="onDateTap"
+          data-date="{{item.fullDate}}">
+      
+      <!-- 数据点占位，实际由 Canvas 绘制，这里仅作为布局对齐参考 -->
+      <view class="dot-placeholder"></view>
+
+      <text class="weekday">{{item.weekday}}</text>
+      <view class="date-num-wrapper">
+        <text class="date-num">{{item.dateNum}}</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,155 @@
+/**
+ * @file schedule.wxss
+ * @description 日程页面样式：日历网格
+ */
+.container {
+  padding: 20rpx;
+  background-color: #f6f6f6;
+  min-height: 100vh;
+}
+
+/* 顶部月份切换 */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 40rpx;
+  background: #fff;
+  border-radius: 16rpx 16rpx 0 0;
+}
+
+.current-date {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.arrow {
+  padding: 10rpx 30rpx;
+  color: #07c160;
+  font-size: 32rpx;
+}
+
+/* 星期表头 */
+.week-header {
+  display: flex;
+  background: #fff;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.week-header text {
+  flex: 1;
+  text-align: center;
+  font-size: 26rpx;
+  color: #999;
+}
+
+/* 日历网格 */
+.calendar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  background: #fff;
+  border-radius: 0 0 16rpx 16rpx;
+  padding-bottom: 20rpx;
+}
+
+.day-cell {
+  width: 14.28%; /* 100/7 */
+  height: 200rpx; /* 固定高度，确保能容纳6条记录 */
+  border-right: 1rpx solid #f9f9f9;
+  border-bottom: 1rpx solid #f9f9f9;
+  box-sizing: border-box;
+  padding: 4rpx; /* 减小内边距 */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* 防止溢出 */
+  transition: background-color 0.2s; /* 添加过渡效果 */
+}
+
+/* 点击态样式 */
+.day-hover {
+  background-color: #e8f5e9; /* 浅绿色背景 */
+}
+
+.day-cell:nth-child(7n) {
+  border-right: none;
+}
+
+.day-num {
+  font-size: 24rpx;
+  color: #333;
+  margin-bottom: 6rpx;
+  text-align: center;
+}
+
+/* 微型复盘卡片 */
+.review-mini-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.review-mini-card {
+  height: 24rpx; /* 固定高度 */
+  line-height: 24rpx;
+  font-size: 18rpx;
+  color: #fff;
+  padding: 0 4rpx;
+  border-radius: 4rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left; /* 左对齐更适合阅读 */
+}
+
+/* 状态背景色 */
+.review-mini-card.completed {
+  background-color: #4CAF50;
+}
+
+.review-mini-card.failed {
+  background-color: #F44336;
+}
+
+.loading {
+  text-align: center;
+  padding: 30rpx;
+  color: #999;
+  font-size: 24rpx;
+}
+
+/* 悬浮按钮组 */
+.fab-group {
+  position: fixed;
+  right: 40rpx;
+  bottom: calc(48px + env(safe-area-inset-bottom) + 60rpx); /* 48px(tabbar) + 安全区 + 原有间距 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30rpx; /* 按钮间距 */
+  z-index: 100;
+}
+
+/* 次级按钮 (返回今日) */
+.fab.secondary {
+  width: 90rpx;
+  height: 90rpx;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
+}
+
+.fab.secondary:active {
+  background-color: #f0f0f0;
+  transform: scale(0.95);
+}
+
+.fab-icon-small {
+  color: #07c160;
+  font-size: 32rpx;
+  font-weight: bold;
+}

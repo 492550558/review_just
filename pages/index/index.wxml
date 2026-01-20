@@ -1,0 +1,121 @@
+<!--
+  @file index.wxml
+  @description 主页结构
+-->
+<!-- 自定义导航栏背景 (由于 navigationStyle: custom) -->
+<view class="custom-nav" style="height: {{navHeight}}px; padding-top: {{statusBarHeight}}px;">
+  <!-- 日期选择器已移除 -->
+</view>
+
+<!-- 日期展示模块 -->
+<week-calendar id="weekCalendar" date="{{currentDate}}" bind:datechange="onDateChange" refreshTrigger="{{refreshTrigger}}"></week-calendar>
+
+<view class="container">
+  <!-- 复盘列表 -->
+  <view class="review-list">
+    <block wx:if="{{reviews.length > 0}}">
+      <view 
+        class="review-item-wrapper {{item.isDeleting ? 'deleting' : ''}} {{draggingIndex === index ? 'dragging' : ''}}" 
+        wx:for="{{reviews}}" 
+        wx:key="id"
+        style="transform: translateY({{item.translateY || 0}}px); z-index: {{draggingIndex === index ? 100 : 1}}">
+        <view class="review-item" 
+          bindtap="onReviewTap" 
+          bindtouchstart="onTouchStart"
+          bindtouchmove="onTouchMove"
+          bindtouchend="onTouchEnd"
+          data-id="{{item.id}}"
+          data-index="{{index}}"
+          style="transform: translateX({{item.offsetX}}px); transition: {{draggingIndex === index ? 'none' : (item.transition || 'transform 0.3s ease')}}">
+          <view class="priority-bar priority-{{item.priority || 'none'}}"></view>
+          <view class="status-capsule {{item.status || 'completed'}}" aria-label="状态：{{item.status === 'failed' ? '失败' : '完成'}}">
+            <text class="status-text">{{item.status === 'failed' ? '失败' : '完成'}}</text>
+          </view>
+          <text class="review-title">{{item.title}}</text>
+          <view class="review-arrow"></view>
+        </view>
+        <view class="delete-action" catchtap="onDeleteTap" data-id="{{item.id}}">
+          <text>删除</text>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="empty-state">
+      <text>暂无记录，点击右下角添加</text>
+    </view>
+  </view>
+
+  <!-- 浮动操作按钮组 -->
+  <view class="fab-group">
+    <view class="fab secondary" bindtap="onBackToday" wx:if="{{!isToday}}">
+      <text class="fab-icon-small">今</text>
+    </view>
+    <view class="fab" bindtap="onAddTap">
+      <text class="fab-icon">+</text>
+    </view>
+  </view>
+
+  <!-- 抽屉遮罩层 -->
+  <view class="drawer-mask {{isDrawerOpen ? 'visible' : ''}}" bindtap="closeDrawer"></view>
+
+  <!-- 抽屉容器 -->
+  <view class="drawer-container {{isDrawerOpen ? 'visible' : ''}}">
+    <view class="drawer-header">
+      <view class="header-spacer"></view>
+      <text class="drawer-title">{{editingReviewId ? '编辑' : '新建'}}</text>
+      <view class="confirm-btn-header" bindtap="onSave">确定</view>
+    </view>
+    
+    <scroll-view scroll-y class="drawer-content">
+      <view class="form-group title-group {{title.length >= 14 ? 'limit-reached' : ''}}">
+        <input class="title-input" placeholder="输入名称" value="{{title}}" bindinput="onTitleInput" maxlength="14" />
+        <view class="input-controls">
+          <view class="clear-btn" wx:if="{{title.length > 0}}" bindtap="onClearTitle">×</view>
+          <text class="char-counter {{title.length >= 14 ? 'limit-reached' : ''}}">{{title.length || 0}}/14</text>
+        </view>
+      </view>
+      
+      <view class="form-group row-group">
+        <!-- 时间段选择器 -->
+        <view class="priority-container compact">
+          <text class="label-text">时段:</text>
+          <view class="icons-wrapper">
+            <view 
+              class="priority-item" 
+              wx:for="{{priorities}}" 
+              wx:key="value" 
+              bindtap="onPriorityTap" 
+              data-value="{{item.value}}">
+              <view class="icon-wrapper" style="background-color: {{priority === item.value ? item.color : '#e0e0e0'}}; {{priority === item.value ? 'transform: scale(1.2); box-shadow: 0 0 0 4rpx ' + item.color + '33' : ''}}">
+              </view>
+              <text class="btn-label">{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 状态选择器 -->
+        <view class="priority-container compact">
+          <text class="label-text">状态：</text>
+          <view class="icons-wrapper">
+            <view 
+              class="priority-item" 
+              wx:for="{{statuses}}" 
+              wx:key="value" 
+              bindtap="onStatusTap" 
+              data-value="{{item.value}}">
+              <view class="icon-wrapper" style="background-color: {{status === item.value ? item.color : '#e0e0e0'}}; {{status === item.value ? 'transform: scale(1.2); box-shadow: 0 0 0 4rpx ' + item.color + '33' : ''}}">
+              </view>
+              <text class="btn-label">{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="form-group flex-1">
+        <textarea class="content-input" placeholder="输入详细内容..." value="{{content}}" bindinput="onContentInput" maxlength="-1" />
+      </view>
+
+      <view class="footer">
+      </view>
+    </scroll-view>
+  </view>
+</view>

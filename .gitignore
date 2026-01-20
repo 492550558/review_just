@@ -1,0 +1,9 @@
+node_modules
+miniprogram_npm
+.idea
+.vscode
+.DS_Store
+project.private.config.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

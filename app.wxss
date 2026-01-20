@@ -1,0 +1,41 @@
+/**
+ * @file app.wxss
+ * @description 全局样式文件，定义CSS变量、重置样式和基础容器样式
+ * @created 2026-01-18
+ * @lastModified 2026-01-18
+ * @author Trae AI
+ * @version 1.0.0
+ */
+
+/**app.wxss**/
+page {
+  /* Global Color Variables */
+  --color-primary: #07c160;
+  --color-primary-dark: #06ad56;
+  
+  /* Priority Colors (WCAG 2.1 AA Compliant) */
+  /* Morning (High): Accessible Blue */
+  --color-priority-high: #00c4ba; 
+  --color-priority-high-bg: #E0F2FE;
+  
+  /* Noon (Medium): Accessible Orange/Amber */
+  --color-priority-medium: #ffa702; 
+  --color-priority-medium-bg: #FEF3C7;
+  
+  /* Night (Low): Accessible Purple */
+  --color-priority-low: #01004d; 
+  --color-priority-low-bg: #EDE9FE;
+
+  background-color: #f6f6f6;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica,
+    Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei',
+    sans-serif;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box;
+} 

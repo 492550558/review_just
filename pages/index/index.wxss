@@ -1,0 +1,552 @@
+/**
+ * @file index.wxss
+ * @description 主页样式文件，包含列表布局、左滑交互动画及FAB按钮样式
+ * @created 2026-01-18
+ * @lastModified 2026-01-18
+ * @author Trae AI
+ * @version 1.0.0
+ */
+
+/* 自定义导航栏 */
+.custom-nav {
+  background-color: #07c160;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 30rpx;
+  padding-right: 220rpx; /* 避开胶囊按钮 */
+  box-sizing: border-box;
+  position: relative;
+  z-index: 100;
+}
+
+.nav-title {
+  font-size: 34rpx;
+  font-weight: 500;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 12px; /* 简单对齐 */
+}
+
+/* 隐藏左侧图标占位，如果需要 */
+.nav-icons {
+  display: flex;
+  align-items: center;
+}
+
+.nav-icon {
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 30rpx;
+}
+
+.nav-icon-text {
+  font-size: 40rpx;
+  margin-right: 30rpx;
+  line-height: 48rpx;
+}
+
+/* 日期组件样式调整 */
+week-calendar {
+  display: block;
+  margin-top: 0;
+  padding-top: 100rpx;
+  background-color: #07c160;
+}
+
+.review-list {
+  width: 100%;
+  padding: 20rpx;
+  padding-top: 40rpx; /* 增加顶部间距，与日历组件隔开 */
+  padding-bottom: 120rpx; /* 预留悬浮按钮空间 */
+  overflow-x: hidden; /* 防止页面水平滚动 */
+}
+
+.review-item-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 0;
+  height: auto;
+  transition: transform 0.2s ease, opacity 0.3s ease; /* Add transform transition for reorder */
+  opacity: 1;
+}
+
+.review-item-wrapper.dragging {
+  z-index: 100;
+  transition: none; /* Disable transition for the dragging item */
+  opacity: 0.9;
+}
+
+.review-item-wrapper.dragging .review-item {
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.15); /* Add shadow when dragging */
+  transform: scale(1.02); /* Slightly scale up */
+  background-color: #fafafa;
+}
+
+.review-item-wrapper.deleting {
+  height: 0;
+  margin-bottom: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+/* 箭头 */
+.review-item {
+  position: relative;
+  z-index: 2; /* 位于删除按钮上方 */
+  background: #fff;
+  /* padding: 30rpx;  移除内边距以便色条左对齐 */
+  padding: 0; 
+  padding-right: 50rpx; /* 保留右侧内边距 */
+  /* margin-bottom: 40rpx; 移除项目外边距，移动到容器 */
+  border-radius: 12rpx;
+  display: flex;
+  align-items: stretch; /* 拉伸以填充高度 */
+  box-shadow: 0 2rpx 8rpx #1a29fc0d;
+  /* transition: all 0.3s ease;  由内联样式控制滑动效果 */
+  overflow: hidden; /* 确保色条遵循圆角设置 */
+  min-height: 100rpx; /* 确保最小高度 */
+}
+/* 主页删除 */
+.delete-action {
+  position: absolute;
+  top: 50%; /* 垂直居中定位 */
+  transform: translateY(-50%); /* 配合 top 实现垂直居中 */
+  right: 0;
+  bottom: auto; /* 取消底部定位 */
+  width: 80px; /* 匹配JS逻辑 */
+  height: 90%; /* 设置高度占比，例如80% */
+  background-color: #ff4d4f;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  border-radius: 12rpx; /* 四周圆角 */
+  font-size: 30rpx;
+  margin-right: 10rpx; /* 右侧留白 */
+}
+
+.review-item:active {
+  background-color: #f0f0f0;
+}
+/* 主页颜色标注 */
+.priority-bar {
+  width: 10rpx; /* 30px width */
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+
+/* 状态胶囊 */
+.status-capsule {
+  position: absolute;
+  top: calc(50% - 20px - 20px); /* 垂直居中(50%) - 删除按钮一半高度(假设40px) - 偏移量(20px) = 约等于顶部对齐再上移 */
+  /* 更精确的计算：删除按钮 top: 50%. 胶囊中心要比删除按钮中心高 20px + 胶囊一半高度? 
+     用户说：Y轴坐标比删除按钮顶部坐标小20px。
+     删除按钮高度 90%。 top: 5% (50% - 45%)。
+     top_delete = 5%。
+     top_capsule = 5% - 20px。
+     right: 8px ( (80-64)/2 )。
+  */
+  right: 8px; 
+  /* 由于父容器高度动态，百分比计算复杂。简化为固定位置：右上角悬浮 */
+  top: 50%; /* 垂直居中 */
+  transform: translateY(-50%); /* 配合 top 实现垂直居中 */
+  right: 100px; /* 水平居中于删除按钮 (80-64)/2 */
+  
+  width: 45px; /* 删除按钮宽度 80px * 0.8 */
+  height: 25px; 
+  border-radius: 50rpx; /* 完全圆角 */
+  z-index: 1; /* 与删除按钮同级，被卡片遮挡 */
+  transition: background-color 0.3s ease-in-out;
+  display: flex; /* 启用 flex 布局使文字居中 */
+  justify-content: center;
+  align-items: center;
+}
+
+.status-text {
+  font-size: 24rpx;
+  color: #fff;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.status-capsule.completed {
+  background-color: #4CAF50;
+}
+
+.status-capsule.failed {
+  background-color: #F44336;
+}
+
+/* Colors - Using CSS Variables */
+.priority-high {
+  background-color: var(--color-priority-high);
+}
+
+.priority-medium {
+  background-color: var(--color-priority-medium);
+}
+
+.priority-low {
+  background-color: var(--color-priority-low);
+}
+
+/* 无优先级的默认状态 */
+.priority-none {
+  background-color: transparent;
+}
+
+.review-title {
+  font-size: 32rpx;
+  color: #333333;
+  font-weight: 500;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  align-self: center; /* 垂直居中 */
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
+}
+
+.review-arrow {
+  width: 16rpx;
+  height: 16rpx;
+  border-top: 4rpx solid #cccccc;
+  border-right: 4rpx solid #ccc;
+  transform: rotate(45deg);
+  margin-left: 20rpx;
+  align-self: center; /* 垂直居中 */
+}
+
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+/* 悬浮按钮组 */
+.fab-group {
+  position: fixed;
+  right: 40rpx;
+  bottom: calc(48px + env(safe-area-inset-bottom) + 60rpx); /* 48px(tabbar) + 安全区 + 原有间距 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30rpx; /* 按钮间距 */
+  z-index: 100;
+}
+
+/* 主按钮 (添加) */
+.fab {
+  /* 移除 fixed 定位，改由 fab-group 控制 */
+  position: relative;
+  right: auto;
+  bottom: auto;
+  width: 110rpx;
+  height: 110rpx;
+  background-color: #07c160;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 6rpx 16rpx #07c16170;
+}
+
+/* 次级按钮 (返回今日) */
+.fab.secondary {
+  width: 90rpx;
+  height: 90rpx;
+  background-color: #fff;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
+}
+
+.fab.secondary:active {
+  background-color: #f0f0f0;
+  transform: scale(0.95);
+}
+
+.fab-icon-small {
+  color: #07c160;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+/* 点击添加按钮后的颜色 */
+.fab:active {
+  transform: scale(0.95);
+  background-color: #07c16191;
+}
+
+.fab-icon {
+  color: #fff;
+  font-size: 60rpx;
+  line-height: 1;
+  font-weight: 300;
+  margin-top: -8rpx; /* 视觉微调 */
+}
+
+/* 抽屉遮罩层 */
+.drawer-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.drawer-mask.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 抽屉容器 */
+.drawer-container {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 65vh; /* 视窗一半以上，留出空间 */
+  background-color: #fff;
+  z-index: 1001;
+  border-radius: 24rpx 24rpx 0 0;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.1);
+}
+
+.drawer-container.visible {
+  transform: translateY(0);
+}
+
+/* 抽屉头部 */
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.drawer-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* 占位符，保持布局平衡（可选，视需要而定） */
+.header-spacer {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.confirm-btn-header {
+  font-size: 32rpx;
+  color: var(--color-primary); /* 使用主题色 #07c160 */
+  font-weight: 500;
+  padding: 10rpx;
+  transition: opacity 0.2s;
+}
+
+.confirm-btn-header:active {
+  opacity: 0.6;
+}
+
+/* 抽屉内容 */
+.drawer-content {
+  flex: 1;
+  padding: 30rpx;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* --- 以下为从 review.wxss 迁移并微调的样式 --- */
+
+.form-group {
+  margin-bottom: 0; /* 移除名片之间的距离 */
+}
+
+/* 除了第一个 .form-group，其他的上面加线 */
+.form-group + .form-group {
+  border-top: 1rpx solid #000;
+}
+
+.flex-1 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 复盘名称输入容器 */
+.title-group {
+  position: relative;
+  background: #f5f5f5; /* 灰色背景更适合弹窗 */
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  border: 2rpx solid transparent;
+  transition: border-color 0.3s;
+  height: 100rpx; /* 显式设置高度，与时段选择器一致 */
+}
+
+.title-group.limit-reached {
+  border-color: #ff4d4f;
+}
+
+.title-input {
+  background: transparent;
+  padding: 0 24rpx; /* 调整内边距，去除上下padding，由 flex 垂直居中 */
+  flex: 1;
+  font-size: 32rpx;
+  font-weight: 500;
+  height: 100%; /* 充满容器高度 */
+}
+
+.input-controls {
+  display: flex;
+  align-items: center;
+  padding-right: 24rpx;
+}
+
+.clear-btn {
+  width: 36rpx;
+  height: 36rpx;
+  line-height: 32rpx;
+  text-align: center;
+  background: #ccc;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 28rpx;
+  margin-right: 16rpx;
+  flex-shrink: 0;
+}
+
+.char-counter {
+  font-size: 24rpx;
+  color: #999;
+  flex-shrink: 0;
+}
+
+.char-counter.limit-reached {
+  color: #ff4d4f;
+}
+
+/* 横向排列组 */
+.row-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 0; /* 消除间距 */
+  position: relative; /* 用于定位中间分割线 */
+}
+
+.priority-container.compact {
+  flex: 1;
+  padding: 0 16rpx;
+}
+
+.priority-container {
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20rpx;
+  background: #f5f5f5;
+  /* 移除统一圆角，下面单独设置 */
+  border-radius: 0; 
+}
+
+/* 左侧容器：保留左下圆角（如果需要），这里主要是拼接效果 */
+/* 由于上方有 title-group，下方有 content-input，这一行位于中间 */
+/* 假设整体是一个大卡片风格，这里不做圆角，或者保持方角 */
+/* 如果之前 title-group 有圆角，这里应该处理一下。 */
+/* 目前 title-group 有 border-radius: 8rpx。 */
+/* 为了整体美观，row-group 里的元素应该没有圆角（因为它们在中间），或者：
+   左边那个：左上0，左下0（如果下面还有），右上0，右下0。
+   实际上，因为 border-top 的存在，这一行看起来是被夹在中间的。
+   我们保持默认无圆角，或者微调。
+*/
+
+/* 针对左右两个容器的特殊圆角处理，使其看起来像一个整体被切分 */
+.priority-container:first-child {
+  border-right: none; /* 分割线由 row-group::after 处理，或者这里加 */
+  /* 如果 title-group 有圆角，这里可能需要处理 border-radius */
+  border-radius: 0; 
+}
+
+.priority-container:last-child {
+  border-left: none;
+  border-radius: 0;
+}
+
+.label-text {
+  font-size: 30rpx;
+  color: #333333;
+}
+
+.icons-wrapper {
+  display: flex;
+}
+
+.priority-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 50rpx;
+}
+
+.icon-wrapper {
+  width: 30rpx;
+  height: 30rpx;
+  background: #e0e0e0;
+  border-radius: 50%;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+  margin-bottom: 12rpx;
+}
+
+.btn-label {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1;
+}
+
+.content-input {
+  background: #f5f5f5;
+  padding: 24rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  width: 100%;
+  height: 200rpx; /* 固定高度 */
+  box-sizing: border-box;
+  line-height: 1.6;
+}
+
+.footer {
+  margin-top: 20rpx;
+  padding-bottom: 20rpx;
+}
+
+.confirm-btn {
+  background-color: var(--color-primary);
+  color: #fff;
+  font-size: 32rpx;
+  border-radius: 8rpx;
+}
+
+.confirm-btn:active {
+  background-color: var(--color-primary-dark);
+}

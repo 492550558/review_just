@@ -1,0 +1,75 @@
+<!--
+  @file stats.wxml
+  @description 统计页面结构：包含维度切换、图表、表格及导出
+-->
+<view class="container">
+  <!-- 顶部 Tab 切换 -->
+  <view class="tabs">
+    <view class="tab-item {{activeTab === index ? 'active' : ''}}" 
+          wx:for="{{tabs}}" 
+          wx:key="*this"
+          bindtap="onTabTap"
+          data-index="{{index}}">
+      {{item}}
+    </view>
+  </view>
+
+  <!-- 自定义时间段选择 -->
+  <view class="date-picker-group" wx:if="{{activeTab === 2}}">
+    <picker mode="date" value="{{startDate}}" bindchange="onDateChange" data-field="startDate">
+      <view class="picker">{{startDate}}</view>
+    </picker>
+    <text>至</text>
+    <picker mode="date" value="{{endDate}}" bindchange="onDateChange" data-field="endDate">
+      <view class="picker">{{endDate}}</view>
+    </picker>
+  </view>
+
+  <!-- 概览卡片 -->
+  <view class="stats-card summary-card">
+    <view class="stats-grid">
+      <view class="stats-item">
+        <text class="num">{{summary.total}}</text>
+        <text class="label">总任务</text>
+      </view>
+      <view class="stats-item">
+        <text class="num green">{{summary.completed}}</text>
+        <text class="label">完成</text>
+      </view>
+      <view class="stats-item">
+        <text class="num red">{{summary.failed}}</text>
+        <text class="label">失败</text>
+      </view>
+      <view class="stats-item">
+        <text class="num blue">{{summary.rate}}</text>
+        <text class="label">成功率</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 折线图 (最近7天趋势) -->
+  <view class="chart-container">
+    <canvas type="2d" id="lineChart" class="line-chart"></canvas>
+  </view>
+
+  <!-- 可视化趋势图 (CSS 饼图) -->
+  <view class="chart-container" wx:if="{{chartData}}">
+    <view class="pie-chart-wrapper">
+      <!-- 饼图主体 -->
+      <view class="pie-chart" style="{{chartData.style}}"></view>
+      
+      <!-- 图例与数据 -->
+      <view class="legend-container" wx:if="{{chartData.hasData}}">
+        <view class="legend-item">
+          <view class="dot green"></view>
+          <text>完成 {{chartData.completedPercent}}</text>
+        </view>
+        <view class="legend-item">
+          <view class="dot red"></view>
+          <text>失败 {{chartData.failedPercent}}</text>
+        </view>
+      </view>
+      <view class="empty-tip" wx:else>暂无数据</view>
+    </view>
+  </view>
+</view>

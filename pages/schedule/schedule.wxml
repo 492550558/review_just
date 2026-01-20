@@ -1,0 +1,53 @@
+<!--
+  @file schedule.wxml
+  @description 日程页面结构：月视图日历
+-->
+<view class="container">
+  <!-- 顶部月份切换 -->
+  <view class="calendar-header">
+    <view class="arrow" bindtap="changeMonth" data-delta="-1">◀</view>
+    <text class="current-date">{{currentYear}}年{{currentMonth}}月</text>
+    <view class="arrow" bindtap="changeMonth" data-delta="1">▶</view>
+  </view>
+
+  <!-- 星期表头 -->
+  <view class="week-header">
+    <text wx:for="{{weekDays}}" wx:key="*this">{{item}}</text>
+  </view>
+
+  <!-- 日历网格 -->
+  <view class="calendar-grid" 
+        bindtouchstart="onTouchStart" 
+        bindtouchend="onTouchEnd">
+    <view class="day-cell {{item.empty ? 'empty' : ''}}" 
+          hover-class="{{!item.empty ? 'day-hover' : ''}}"
+          wx:for="{{calendarDays}}" 
+          wx:key="index"
+          bindtap="onDayTap"
+          data-fulldate="{{item.fullDate}}"
+          data-reviews="{{item.reviews}}">
+      
+      <!-- 日期数字 -->
+      <text class="day-num" wx:if="{{!item.empty}}">{{item.day}}</text>
+      
+      <!-- 复盘微型名片 -->
+      <view class="review-mini-list" wx:if="{{!item.empty}}">
+        <view class="review-mini-card {{review.status || 'completed'}}" 
+              wx:for="{{item.reviews}}" 
+              wx:for-item="review" 
+              wx:key="id">
+          {{review.displayTitle}}
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <view class="loading" wx:if="{{isLoading}}">加载中...</view>
+  
+  <!-- 返回本月悬浮按钮 -->
+  <view class="fab-group" wx:if="{{!isCurrentMonth}}">
+    <view class="fab secondary" bindtap="onBackToCurrentMonth">
+      <text class="fab-icon-small">今</text>
+    </view>
+  </view>
+</view>

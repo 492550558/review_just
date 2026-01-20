@@ -1,0 +1,76 @@
+{
+  "miniVersion": "v2",
+  "name": "review",
+  "version": "0.0.1",
+  "versionCode": 100,
+  "i18nFilePath": "i18n",
+  "mini-ohos": {
+    "sdkVersion": "0.5.1"
+  },
+  "mini-android": {
+    "resourcePath": "miniapp/android/nativeResources",
+    "sdkVersion": "1.6.24",
+    "toolkitVersion": "0.11.0",
+    "useExtendedSdk": {
+      "media": false,
+      "bluetooth": false,
+      "network": false,
+      "scanner": false,
+      "xweb": false
+    },
+    "icons": {
+      "hdpi": "",
+      "xhdpi": "d:/download/图标.jpg",
+      "xxhdpi": "d:/download/图标.jpg",
+      "xxxhdpi": "d:/download/图标.jpg"
+    },
+    "splashscreen": {
+      "hdpi": "",
+      "xhdpi": "d:/download/微信图片_20260120234247.jpg",
+      "xxhdpi": "d:/download/微信图片_20260120234247.jpg"
+    },
+    "enableVConsole": "close",
+    "privacy": {
+      "enable": true
+    }
+  },
+  "mini-ios": {
+    "sdkVersion": "1.6.28",
+    "toolkitVersion": "0.0.9",
+    "useExtendedSdk": {
+      "WeAppOpenFuns": true,
+      "WeAppNetwork": false,
+      "WeAppBluetooth": false,
+      "WeAppMedia": false,
+      "WeAppLBS": false,
+      "WeAppOthers": false
+    },
+    "enableVConsole": "close",
+    "icons": {
+      "mainIcon120": "d:/download/图标.jpg",
+      "mainIcon180": "",
+      "spotlightIcon80": "d:/download/图标.jpg",
+      "spotlightIcon120": "d:/download/图标.jpg",
+      "settingsIcon58": "d:/download/图标.jpg",
+      "settingsIcon87": "d:/download/图标.jpg",
+      "notificationIcon40": "d:/download/图标.jpg",
+      "notificationIcon60": "d:/download/图标.jpg",
+      "appStore1024": "d:/download/图标.jpg",
+      "ipadMainIcon152": "d:/download/图标.jpg",
+      "ipadMainIcon167": "d:/download/图标.jpg",
+      "ipadSpotlightIcon40": "d:/download/图标.jpg",
+      "ipadSpotlightIcon80": "d:/download/图标.jpg",
+      "ipadSettingsIcon29": "d:/download/图标.jpg",
+      "ipadSpotlightIcon58": "d:/download/图标.jpg",
+      "ipadNotificationIcon20": "d:/download/图标.jpg",
+      "ipadNotificationIcon40": "d:/download/图标.jpg"
+    },
+    "splashScreen": {
+      "customImage": ""
+    },
+    "privacy": {
+      "enable": false
+    },
+    "enableOpenUrlNavigate": true
+  }
+}

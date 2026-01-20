@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "week-calendar": "/components/week-calendar/week-calendar"
+  },
+  "navigationBarTitleText": "复盘",
+  "navigationStyle": "custom"
+}
