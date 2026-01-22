@@ -2,7 +2,7 @@
   "miniprogramRoot": "./",
   "projectname": "daily-review",
   "description": "Daily Review App",
-  "appid": "wx51591c950244ddae",
+  "appid": "wx12345",
   "setting": {
     "urlCheck": true,
     "es6": true,
